@@ -11,6 +11,22 @@ from .y_finance import (
     get_insider_transactions as get_yfinance_insider_transactions,
 )
 from .yfinance_news import get_news_yfinance, get_global_news_yfinance
+from .westock import (
+    get_stock_data_westock,
+    get_stock_stats_indicators_window_westock,
+    get_fundamentals_westock,
+    get_balance_sheet_westock,
+    get_cashflow_westock,
+    get_income_statement_westock,
+    get_news_westock,
+    get_global_news_westock,
+    get_insider_transactions_westock,
+)
+from .serper_news import (
+    get_news_serper,
+    get_global_news_serper,
+    get_insider_transactions_serper,
+)
 from .alpha_vantage import (
     get_stock as get_alpha_vantage_stock,
     get_indicator as get_alpha_vantage_indicator,
@@ -63,47 +79,61 @@ TOOLS_CATEGORIES = {
 VENDOR_LIST = [
     "yfinance",
     "alpha_vantage",
+    "westock",
+    "serper",
 ]
 
 # Mapping of methods to their vendor-specific implementations
 VENDOR_METHODS = {
     # core_stock_apis
     "get_stock_data": {
+        "westock": get_stock_data_westock,
         "alpha_vantage": get_alpha_vantage_stock,
         "yfinance": get_YFin_data_online,
     },
     # technical_indicators
     "get_indicators": {
+        "westock": get_stock_stats_indicators_window_westock,
         "alpha_vantage": get_alpha_vantage_indicator,
         "yfinance": get_stock_stats_indicators_window,
     },
     # fundamental_data
     "get_fundamentals": {
+        "westock": get_fundamentals_westock,
         "alpha_vantage": get_alpha_vantage_fundamentals,
         "yfinance": get_yfinance_fundamentals,
     },
     "get_balance_sheet": {
+        "westock": get_balance_sheet_westock,
         "alpha_vantage": get_alpha_vantage_balance_sheet,
         "yfinance": get_yfinance_balance_sheet,
     },
     "get_cashflow": {
+        "westock": get_cashflow_westock,
         "alpha_vantage": get_alpha_vantage_cashflow,
         "yfinance": get_yfinance_cashflow,
     },
     "get_income_statement": {
+        "westock": get_income_statement_westock,
         "alpha_vantage": get_alpha_vantage_income_statement,
         "yfinance": get_yfinance_income_statement,
     },
-    # news_data
+    # news_data — westock has no news/insider data; stubs return graceful messages
     "get_news": {
+        "serper": get_news_serper,
+        "westock": get_news_westock,
         "alpha_vantage": get_alpha_vantage_news,
         "yfinance": get_news_yfinance,
     },
     "get_global_news": {
+        "serper": get_global_news_serper,
+        "westock": get_global_news_westock,
         "yfinance": get_global_news_yfinance,
         "alpha_vantage": get_alpha_vantage_global_news,
     },
     "get_insider_transactions": {
+        "serper": get_insider_transactions_serper,
+        "westock": get_insider_transactions_westock,
         "alpha_vantage": get_alpha_vantage_insider_transactions,
         "yfinance": get_yfinance_insider_transactions,
     },
